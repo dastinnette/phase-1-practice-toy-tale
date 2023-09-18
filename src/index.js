@@ -1,28 +1,8 @@
 let addToy = false;
 
-document.addEventListener("DOMContentLoaded", () => {
-  attachHideAndShowListener();
-});
-
-function attachHideAndShowListener() {
-  const addBtn = document.querySelector("#new-toy-btn");
-  const toyFormContainer = document.querySelector(".container");
-  addBtn.addEventListener("click", () => {
-    // hide & show with the form
-    addToy = !addToy;
-    if (addToy) {
-      toyFormContainer.style.display = "block";
-    } else {
-      toyFormContainer.style.display = "none";
-    }
-  });
-}
-
-// CLASS SOLUTION with adam 
+const toysURL = 'http://localhost:3000/toys'
 
 // use fetch() to GET /toys and render all toys to DOM
-
-const toysURL = 'http://localhost:3000/toys'
 
 // fetch returns a promise 
 fetch(toysURL)
@@ -103,42 +83,20 @@ function renderToy(toyObject) {
       toysContainer.append(div)
 }
 
-// PARTNER SOLUTION
+document.addEventListener("DOMContentLoaded", () => {
+  attachHideAndShowListener();
+});
 
-// use fetch() to GET /toys and render all toys to DOM
-
-// const url = 'http://localhost:3000/toys'
-// const toyCollection = document.getElementById('toy-collection')
-
-// fetch(url)
-//   .then(res => res.json())
-//   .then(data => {
-//     console.log(data)
-
-//     data.forEach(toyObj => {
-//       const div = document.createElement('div')
-//       div.classList.add('card')
-//       console.log(div)
-
-//       const name = document.createElement('h2')
-//       div.appendChild(name)
-//       name.textContent = toyObj.name
-
-//       const img = document.createElement('img')
-//       div.appendChild(img)
-//       img.classList.add('toy-avatar')
-//       img.src = toyObj.image
-
-//       const likes = document.createElement('p')
-//       div.appendChild(likes)
-//       likes.textContent = `${toyObj.likes} likes`
-
-//       const button = document.createElement('button')
-//       div.appendChild(button)
-//       button.classList.add('like-btn')
-//       button.textContent = "Like ❤️"
-//       button.id = toyObj.id
-
-//       toyCollection.append(div)
-//     })
-//   })
+function attachHideAndShowListener() {
+  const addBtn = document.querySelector("#new-toy-btn");
+  const toyFormContainer = document.querySelector(".container");
+  addBtn.addEventListener("click", () => {
+    // hide & show with the form
+    addToy = !addToy;
+    if (addToy) {
+      toyFormContainer.style.display = "block";
+    } else {
+      toyFormContainer.style.display = "none";
+    }
+  });
+}
