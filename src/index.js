@@ -34,22 +34,24 @@ fetch(toysURL)
   })
 
 function updateLikes(eventObj) {
-  // const theCard = eventObj.target.parentElement
-  // const likesContainer = theCard.querySelector('p')
+  // find the element we wish to change
+  const theCard = eventObj.target.parentElement
+  const likesContainer = theCard.querySelector('p')
 
-  // // isolate number from the strgin
-  // const oldString = likesContainer.innerText
-  // const stringArray = oldString.split(" ")
-
-  // // add one to number
-  // const oldNumber = stringSplitToArray[0]
-  // stringSplitToArray[0] = parseInt(oldNumber) + 1
-
-  // //changing the DOM back to the new string
-  // const theNewString = stringSplitToArray.join(" ")
-
-  // likesContainer.innerText = theNewString
+  // grab the string we're trying to change
+  const oldString = likesContainer.innerText
   
+  // isolate number from the string
+  const stringSplitToArray = oldString.split(" ")
+
+  // add one to number
+  const oldNumber = stringSplitToArray[0]
+  stringSplitToArray[0] = parseInt(oldNumber) + 1
+
+  //changing the DOM back to the new string
+  const theNewString = stringSplitToArray.join(" ")
+
+  likesContainer.innerText = theNewString
 }
 
 const newToyForm = document.querySelector(".add-toy-form")
