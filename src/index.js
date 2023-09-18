@@ -1,10 +1,14 @@
 let addToy = false;
 
 document.addEventListener("DOMContentLoaded", () => {
+  attachHideAndShowListener();
+});
+
+function attachHideAndShowListener() {
   const addBtn = document.querySelector("#new-toy-btn");
   const toyFormContainer = document.querySelector(".container");
   addBtn.addEventListener("click", () => {
-    // hide & seek with the form
+    // hide & show with the form
     addToy = !addToy;
     if (addToy) {
       toyFormContainer.style.display = "block";
@@ -12,40 +16,127 @@ document.addEventListener("DOMContentLoaded", () => {
       toyFormContainer.style.display = "none";
     }
   });
-});
+}
 
-const url = 'http://localhost:3000/toys'
-const toyCollection = document.getElementById('toy-collection')
+// CLASS SOLUTION with adam 
 
-fetch(url)
-  .then(res => res.json())
-  .then(data => {
-    console.log(data)
+// use fetch() to GET /toys and render all toys to DOM
 
-    data.forEach(toyObj => {
+const toysURL = 'http://localhost:3000/toys'
+
+// fetch returns a promise 
+fetch(toysURL)
+  .then(responseObj => {
+    return responseObj.json()
+  })
+  .then(toysArray => {
+    toysArray.forEach(renderToy)
+  })
+
+function updateLikes(eventObj) {
+  // const theCard = eventObj.target.parentElement
+  // const likesContainer = theCard.querySelector('p')
+
+  // // isolate number from the strgin
+  // const oldString = likesContainer.innerText
+  // const stringArray = oldString.split(" ")
+
+  // // add one to number
+  // const oldNumber = stringSplitToArray[0]
+  // stringSplitToArray[0] = parseInt(oldNumber) + 1
+
+  // //changing the DOM back to the new string
+  // const theNewString = stringSplitToArray.join(" ")
+
+  // likesContainer.innerText = theNewString
+  
+}
+
+const newToyForm = document.querySelector(".add-toy-form")
+
+newToyForm.addEventListener('submit', e => {
+  e.preventDefault()
+
+  const newName = e.target.name.value
+  const newImage = e.target.image.value 
+  const newLikes = 0
+
+  const newToy = {
+    name: newName,
+    image: newImage,
+    likes: newLikes
+  }
+
+  renderToy(newToy)
+})
+
+function renderToy(toyObject) {
+      // make a card, aka div
       const div = document.createElement('div')
-      div.classList.add('card')
-      console.log(div)
+      div.className = 'card'
 
-      const name = document.createElement('h2')
-      div.appendChild(name)
-      name.textContent = toyObj.name
-
+      // put toyObject info in other elements
+      const h2 = document.createElement('h2')
+      toyObject.name = toyObject.name
+      
       const img = document.createElement('img')
-      div.appendChild(img)
-      img.classList.add('toy-avatar')
-      img.src = toyObj.image
-
-      const likes = document.createElement('p')
-      div.appendChild(likes)
-      likes.textContent = `${toyObj.likes} likes`
+      img.src = toyObject.image
+      img.className = 'toy-avatar'
+      
+      const p = document.createElement('p')
+      p.innerText = toyObject.likes + " likes"
 
       const button = document.createElement('button')
-      div.appendChild(button)
-      button.classList.add('like-btn')
-      button.textContent = "Like ❤️"
-      button.id = toyObj.id
+      button.innerText = "Like ❤️"
+      button.className = "like-btn"
+      button.id = toyObject.id
 
-      toyCollection.append(div)
-    })
-  })
+      button.addEventListener('click', updateLikes)
+
+      // append other elements to first div 
+      div.append(h2, img, p, button)
+
+      // append card to page 
+      const toysContainer = document.getElementById('toy-collection')
+      toysContainer.append(div)
+}
+
+// PARTNER SOLUTION
+
+// use fetch() to GET /toys and render all toys to DOM
+
+// const url = 'http://localhost:3000/toys'
+// const toyCollection = document.getElementById('toy-collection')
+
+// fetch(url)
+//   .then(res => res.json())
+//   .then(data => {
+//     console.log(data)
+
+//     data.forEach(toyObj => {
+//       const div = document.createElement('div')
+//       div.classList.add('card')
+//       console.log(div)
+
+//       const name = document.createElement('h2')
+//       div.appendChild(name)
+//       name.textContent = toyObj.name
+
+//       const img = document.createElement('img')
+//       div.appendChild(img)
+//       img.classList.add('toy-avatar')
+//       img.src = toyObj.image
+
+//       const likes = document.createElement('p')
+//       div.appendChild(likes)
+//       likes.textContent = `${toyObj.likes} likes`
+
+//       const button = document.createElement('button')
+//       div.appendChild(button)
+//       button.classList.add('like-btn')
+//       button.textContent = "Like ❤️"
+//       button.id = toyObj.id
+
+//       toyCollection.append(div)
+//     })
+//   })
