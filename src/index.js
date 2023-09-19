@@ -31,6 +31,23 @@ function renderToy(toyObj) {
   console.log(toyObj)
 }
 
+const newToyForm = document.querySelector('.add-toy-form')
+newToyForm.addEventListener('submit', event => {
+  event.preventDefault()
+
+  const newName = event.target.name.value
+  const newImage = event.target.image.value
+  const newLikes = 0
+
+  const newToy = {
+    name: newName,
+    image: newImage,
+    likes: newLikes
+  }
+
+  renderToy(newToy)
+})
+
 let addToy = false;
 
 document.addEventListener("DOMContentLoaded", () => {
